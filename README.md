@@ -71,7 +71,8 @@ make defconfig
 ./scripts/config --enable CONFIG_MLX5_CORE_EN
 ./scripts/config --enable CONFIG_BTRFS_FS
 ./scripts/config --enable CONFIG_BTRFS_FS_POSIX_ACL
-./scripts/config --enable CRYPTO_LZO
+./scripts/config --enable CONFIG_PSI
+./scripts/config --enable CONFIG_CRYPTO_LZO
 ./scripts/config --enable CONFIG_ZRAM
 ./scripts/config --enable CONFIG_ZRAM_DEF_COMP_LZORLE
 make olddefconfig
