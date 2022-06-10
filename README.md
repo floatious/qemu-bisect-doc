@@ -226,8 +226,20 @@ and make sure that we are running the latest security and bug fixes:
 dnf upgrade --refresh
 ```
 
-Install fio and nvme-cli, or any other tools that are needed in order to
-trigger the kernel bug inside your QEMU machine:
+If you prefer to type in a real terminal rather than the limited QEMU console,
+you can run:
+```
+echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+systemctl restart sshd
+```
+
+and then you will have the option to log on to your QEMU machine using SSH:
+```
+ssh -A -p 10222 root@localhost
+```
+
+Now it is time to install fio and nvme-cli, or any other tools that are needed
+in order to trigger the kernel bug inside your QEMU machine:
 ```
 dnf install fio nvme-cli
 ```
