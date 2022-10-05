@@ -191,10 +191,10 @@ QEMU_GUEST_SSH_FWD_PORT=10222
 RAM=4G
 
 qemu-system-x86_64 -m $RAM -cpu host -smp $(nproc) -enable-kvm -nographic \
-             -drive file=$ROOTFS,format=qcow2 \
-             -drive file=$USER_DATA,format=raw \
+             -drive file=$ROOTFS,format=qcow2,if=virtio \
+             -drive file=$USER_DATA,format=raw,if=virtio \
              -kernel $KERNEL \
-             -append "console=ttyS0 root=/dev/sda5 rootflags=subvol=root net.ifnames=0" \
+             -append "console=ttyS0 root=/dev/vda5 rootflags=subvol=root net.ifnames=0" \
              -device virtio-net-pci,netdev=usernet \
              -netdev user,id=usernet,hostfwd=tcp::$QEMU_GUEST_SSH_FWD_PORT-:22 \
              -device vfio-pci,host=$PCI_BDF
