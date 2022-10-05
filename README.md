@@ -226,6 +226,7 @@ dnf upgrade --refresh
 If you prefer to type in a real terminal rather than the limited QEMU console,
 you can run:
 ```
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
 echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 systemctl restart sshd
 ```
