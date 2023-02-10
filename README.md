@@ -249,7 +249,7 @@ Copy and modify to match your reproducer:
 ```
 #!/bin/sh
 
-export PATH=/usr/sbin:/usr/bin
+export PATH=/sbin:/usr/sbin:/bin:/usr/bin
 mount -t sysfs -o nodev,noexec,nosuid sysfs /sys
 mount -t proc -o nodev,noexec,nosuid proc /proc
 mount -t tmpfs -o nodev,nosuid tmpfs /tmp
