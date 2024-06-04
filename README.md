@@ -85,15 +85,15 @@ mkdir ~/qemu-data
 Get a QEMU friendly rootfs image (this guide uses Fedora) using:
 ```
 cd ~/qemu-data
-wget https://download.fedoraproject.org/pub/fedora/linux/releases/37/Cloud/x86_64/images/Fedora-Cloud-Base-37-1.7.x86_64.qcow2
+wget https://download.fedoraproject.org/pub/fedora/linux/releases/40/Cloud/x86_64/images/Fedora-Cloud-Base-UEFI-UKI.x86_64-40-1.14.qcow2
 ```
 
 Create a new image that will be used as our rootfs, based on the Fedora image that we just downloaded.
-It will not modify the Fedora image we just downloaded. Differences will be saved in f37-rootfs-overlay.img.
+It will not modify the Fedora image we just downloaded. Differences will be saved in fedora-rootfs-overlay.img.
 It will not take up 128 GB, it will simply allow it to grow up to that size, since this new file will automatically
 increase in size when we install new packages.
 ```
-qemu-img create -f qcow2 -b Fedora-Cloud-Base-37-1.7.x86_64.qcow2 -F qcow2 f37-rootfs-overlay.img 128G
+qemu-img create -f qcow2 -b Fedora-Cloud-Base-UEFI-UKI.x86_64-40-1.14.qcow2 -F qcow2 fedora-rootfs-overlay.img 128G
 ```
 
 Install cloud-localds on Ubuntu/Debian:
@@ -185,7 +185,7 @@ Modify the variables to match your setup.
 # to QEMU. It has to be the same PCI address as you specified in setup_dev.sh
 PCI_BDF=0000:00:14.3
 KERNEL=~/src/linux/arch/x86/boot/bzImage
-ROOTFS=~/qemu-data/f37-rootfs-overlay.img
+ROOTFS=~/qemu-data/fedora-rootfs-overlay.img
 USER_DATA=~/qemu-data/user-data.img
 QEMU_GUEST_SSH_FWD_PORT=10222
 RAM=4G
@@ -194,7 +194,7 @@ qemu-system-x86_64 -no-reboot -m $RAM -cpu host -smp $(nproc) -enable-kvm -nogra
              -drive file=$ROOTFS,format=qcow2,if=virtio \
              -drive file=$USER_DATA,format=raw,if=virtio \
              -kernel $KERNEL \
-             -append "console=ttyS0 root=/dev/vda5 rootflags=subvol=root net.ifnames=0 oops=panic panic=-1" \
+             -append "console=ttyS0 root=/dev/vda3 rootflags=subvol=root net.ifnames=0 oops=panic panic=-1" \
              -device virtio-net-pci,netdev=usernet \
              -netdev user,id=usernet,hostfwd=tcp::$QEMU_GUEST_SSH_FWD_PORT-:22 \
              -device vfio-pci,host=$PCI_BDF
